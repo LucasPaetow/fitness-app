@@ -1,57 +1,74 @@
 import React, { FunctionComponent } from "react";
 import { RenderRoutes } from "./RenderRoutes";
-import { Redirect } from "react-router-dom";
-import { auth } from "../api/firebase";
 
-type RouteProps = {
-	path: string;
-	key: string;
+import Home from "../pages/homepage";
+import Signup from "../pages/signup";
+import Login from "../pages/login";
+import Dashboard from "../pages/dashboard";
+import RedirectComponent from "./redirect";
+
+export type RouteProps = {
+	path?: string;
+	key?: string;
 	exact?: boolean;
-	component: FunctionComponent;
-	routes?: {
-		path: string;
-		key: string;
-		exact: boolean;
-		component: FunctionComponent;
-	}[];
+	status?: string;
+	component?: FunctionComponent;
+	routes?: RouteProps;
+	modal?: FunctionComponent;
 };
 
-const ROUTES: RouteProps[] = [
-	// { path: "/", key: "home", exact: true, component: homepage },
-	// {
-	// 	path: "/auth",
-	// 	key: "auth",
-	// 	component: RenderRoutes,
-	// 	routes: [
-	// 		{
-	// 			path: "/auth/login",
-	// 			key: "login",
-	// 			exact: true,
-	// 			component: login
-	// 		},
-	// 		{
-	// 			path: "/auth/signup",
-	// 			key: "signup",
-	// 			exact: true,
-	// 			component: signup
-	// 		}
-	// 	]
-	// },
-	// {
-	// 	path: "/dashboard",
-	// 	key: "dashboard",
-	// 	exact: true,
-	// 	component: props => {
-	// 		let user = auth.currentUser;
-	// 		if (!user) {
-	// 			alert("You need to log in to access app routes");
-	// 			return (
-	// 				<Redirect exact from={"/dashboard"} to={"/auth/login"} />
-	// 			);
-	// 		}
-	// 		return dashboard(props);
-	// 	}
-	// }
+const AUTHENTICATED_ROUTES: RouteProps[] = [
+	{
+		path: "/",
+		key: "home",
+		exact: true,
+		status: "default",
+		component: Dashboard
+	},
+	{
+		path: "/create-your-workout",
+		key: "new workout",
+		exact: true,
+		status: "default",
+		component: Dashboard
+	},
+	{
+		key: "fallback",
+		status: "fallback",
+		//@ts-ignore
+		component: () => {
+			return RedirectComponent({ to: "/", record: "" });
+		},
+		modal: () => {
+			return <h1>hello</h1>;
+		}
+	}
 ];
 
-export default ROUTES;
+const UNAUTHENTICATED_ROUTES: RouteProps[] = [
+	{ path: "/", key: "home", exact: true, status: "default", component: Home },
+	{
+		path: "/login",
+		key: "login",
+		exact: true,
+		status: "default",
+		component: Login
+	},
+	{
+		path: "/signup",
+		key: "signup",
+		exact: true,
+		status: "default",
+		component: Signup
+	},
+	{
+		key: "fallback",
+		status: "fallback",
+		component: () => {
+			// return <h1>Not Found!</h1>;
+			return RedirectComponent({ to: "/login", record: "history" });
+		}
+	}
+];
+
+export { UNAUTHENTICATED_ROUTES, AUTHENTICATED_ROUTES };

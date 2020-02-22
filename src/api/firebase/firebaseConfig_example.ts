@@ -5,6 +5,7 @@ const firebaseConfig = {
 	projectId: "xxxxxxxxxxxxxxxxxxxxx",
 	storageBucket: "xxxxxxxxxxxxxxxxxxxxx",
 	messagingSenderId: "xxxxxxxxxxxxxxxxxxxxx",
-	appId: "xxxxxxxxxxxxxxxxxxxxx"
+	appId: "xxxxxxxxxxxxxxxxxxxxx",
+	measurementId: "xxxxxxxxxxxxxxxxxxxxx"
 };
 export default firebaseConfig;
