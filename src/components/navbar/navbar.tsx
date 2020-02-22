@@ -5,13 +5,14 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
 const Navbar = ({ routes }: RouteProps) => {
-	const singleRoute = (route: NestedRouteProps) => (
-		<NavbarItem key={route.key}>
-			<NavbarLink exact to={route.path} activeClassName="selected">
-				{route.key}
-			</NavbarLink>
-		</NavbarItem>
-	);
+	const singleRoute = ({ key, path, status, exact }: NestedRouteProps) =>
+		status === "default" && (
+			<NavbarItem key={key}>
+				<NavbarLink exact={exact} to={path} activeClassName="selected">
+					{key}
+				</NavbarLink>
+			</NavbarItem>
+		);
 
 	const subroutes = (routes: RouteProps) => (
 		<>

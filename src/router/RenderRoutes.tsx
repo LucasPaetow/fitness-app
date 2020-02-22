@@ -1,43 +1,50 @@
 //@ts-nocheck
-import React, { FunctionComponent } from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 
-type RouteProp = {
-	path: string;
-	key: string;
-	exact?: boolean;
-	component: FunctionComponent;
-	routes?: {
-		path: string;
-		key: string;
-		exact: boolean;
-		component: FunctionComponent;
-	}[];
-};
-
-const RouteWithSubRoutes = (route: RouteProp): any => {
+const RouteWithSubRoutes = (routeProp: any): any => {
+	const { path, exact, routes } = routeProp;
 	return (
 		<Route
-			path={route.path}
-			exact={route.exact}
-			render={props => (
-				<route.component {...props} routes={route.routes} />
+			path={path}
+			exact={exact}
+			render={(props: any) => (
+				<routeProp.component {...props} routes={routes} />
 			)}
 		/>
 	);
 };
 
-const RenderRoutes = ({ routes }: any) => {
+const RenderRoutes = ({ routes }: any): any => {
 	return (
-		<Switch>
-			{routes.map((route: any, index: number) => {
-				return <RouteWithSubRoutes key={route.key} {...route} />;
-			})}
-			<Route component={() => <h1>Not Found!</h1>} />
-		</Switch>
+		<>
+			<Switch>
+				{routes.map((route: any, index: number) => {
+					return <RouteWithSubRoutes key={route.key} {...route} />;
+				})}
+				{routes
+					.filter(route => route.status === "fallback")
+					.map(fallback => {
+						return (
+							<RouteWithSubRoutes
+								key={fallback.key}
+								{...fallback}
+							/>
+						);
+					})}
+			</Switch>
+		</>
 	);
 };
 
 export { RenderRoutes };
 
 export default RouteWithSubRoutes;
+
+/*{fallback.modal && (
+									<Modal
+										{...fallback}
+										key={fallback.key + "modal"}>
+										{fallback.modal()}
+									</Modal>
+								)}*/

@@ -1,11 +1,12 @@
 const firebaseConfig = {
-	apiKey: "AIzaSyAYmCSxCTNUoHcpiP8ysNFF2q4AaOYRYjY",
-	authDomain: "auth-boilerplate-270d7.firebaseapp.com",
-	databaseURL: "https://auth-boilerplate-270d7.firebaseio.com",
-	projectId: "auth-boilerplate-270d7",
-	storageBucket: "auth-boilerplate-270d7.appspot.com",
-	messagingSenderId: "473517942258",
-	appId: "1:473517942258:web:45b085bee326c4a910f76b"
+	apiKey: "AIzaSyD9Be_pfIT98SiholRaeW3ioUj9wEVR3zI",
+	authDomain: "workout-1337.firebaseapp.com",
+	databaseURL: "https://workout-1337.firebaseio.com",
+	projectId: "workout-1337",
+	storageBucket: "workout-1337.appspot.com",
+	messagingSenderId: "509073932033",
+	appId: "1:509073932033:web:f7d7f1a461357bdc362500",
+	measurementId: "G-QHC9VR2WGE"
 };
 
 export default firebaseConfig;
