@@ -1,8 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # api secrets
-src/api/firebase/firebaseConfig.ts
-
+src/api/firebase/firebaseConfigs.ts
+src/api/firebase/*
 # dependencies
 /node_modules
 /.pnp
