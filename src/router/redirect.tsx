@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Redirect, useLocation, useHistory } from "react-router-dom";
 import { useNotifications } from "../contexts";
-import Modal from "../components/modal";
 
 type RedirectProps = {
 	to: string;
@@ -17,12 +16,17 @@ const RedirectComponent: React.FC<RedirectProps> = ({ to, record }) => {
 	useEffect(() => {
 		//@ts-ignore
 		toggleNotifications({
-			type: "modal",
+			type: "toast",
 			content: () => {
-				return <h1>hello</h1>;
+				return (
+					<p>
+						You are beeing redirected to {to} in order to
+						authenticate
+					</p>
+				);
 			}
 		});
-	}, [record, toggleNotifications]);
+	}, [record, to, toggleNotifications]);
 
 	return record === "history" ? (
 		<>

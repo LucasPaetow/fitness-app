@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React from "react";
-import Modal from "../components/modal";
+import { Modal, Toast } from "../components/notifications";
 
 const NotificationContext = React.createContext([{}, () => {}]);
 
@@ -13,14 +13,16 @@ const ProvideNotifications: React.FC<Props> = ({ children }) => {
 		type: "none",
 		content: null
 	});
-	console.log(showNotification, toggleNotification);
+
 	return (
 		<NotificationContext.Provider
 			value={[showNotification, toggleNotification]}>
 			{children}
-			//@ts-ignore
 			{showNotification.type === "modal" && (
 				<Modal>{showNotification.content()}</Modal>
+			)}
+			{showNotification.type === "toast" && (
+				<Toast>{showNotification.content()}</Toast>
 			)}
 		</NotificationContext.Provider>
 	);

@@ -1,29 +1,23 @@
-//@ts-ignore
-import React, { useState } from "react";
+//@ts-nocheck
+import React from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 import { useNotifications } from "../../contexts";
 
-export interface PortalProps {
+export interface ModalProps {
 	target: Element;
 	children: React.ReactNode;
 }
 
-const Modal: React.FC<PortalProps> = props => {
+export const Modal: React.FC<PortalProps> = props => {
 	const [showNotification, toggleNotification] = useNotifications();
 	const { children } = props;
 
 	const content = showNotification && (
-		<Overlay>
+		<Overlay
+			onClick={() => toggleNotification({ type: "none", content: null })}>
 			<ModalBase>
-				<ModalClose
-					type="button"
-					onClick={() =>
-						//@ts-ignore
-						toggleNotification({ type: "none", content: null })
-					}>
-					X
-				</ModalClose>
+				<ModalClose type="button" X></ModalClose>
 				<ModalBody>{children}</ModalBody>
 			</ModalBase>
 		</Overlay>
@@ -31,8 +25,6 @@ const Modal: React.FC<PortalProps> = props => {
 
 	return createPortal(<div>{content}</div>, document.body);
 };
-
-export default Modal;
 
 const Overlay = styled.div`
 	z-index: 98;
@@ -46,7 +38,7 @@ const Overlay = styled.div`
 	justify-content: center;
 	height: 100vh;
 	width: 100vw;
-	background-color: rgba(0, 0, 0, 1);
+	background-color: rgba(0, 0, 0, 0.1);
 `;
 
 const ModalBase = styled.div`

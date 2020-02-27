@@ -1,8 +1,8 @@
 //@ts-nocheck
 import React, { useEffect } from "react";
-import { useAuth } from "../../contexts/auth-context";
-import GlobalStyle from "../../styles";
-import { auth } from "../../api/firebase";
+import { useAuth } from "../contexts/auth-context";
+import GlobalStyle from "../styles";
+import { auth } from "../api/firebase";
 
 const loadAuthenticatedApp = () => import("./authenticated-app");
 const AuthenticatedApp = React.lazy(loadAuthenticatedApp);

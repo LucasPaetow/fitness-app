@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
-import Navbar from "../navbar";
-import { UNAUTHENTICATED_ROUTES, RenderRoutes } from "../../router";
+import Navbar from "../components/navbar";
+import { UNAUTHENTICATED_ROUTES, RenderRoutes } from "../router";
 
 const UnauthenticatedApp: React.FC = () => {
 	return (
