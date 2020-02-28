@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { useEffect } from "react";
-import { useAuth } from "../contexts/auth-context";
+import { useAuthDispatch, useAuthState } from "../contexts";
 import GlobalStyle from "../styles";
 import { auth } from "../api/firebase";
 
@@ -9,18 +9,19 @@ const AuthenticatedApp = React.lazy(loadAuthenticatedApp);
 const UnauthenticatedApp = React.lazy(() => import("./unauthenticated-app"));
 
 const App: React.FC = () => {
-	const [user, setUser] = useAuth();
+	const authDispatch = useAuthDispatch();
+	const authState = useAuthState();
 
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged(user => {
 			if (user) {
-				setUser(user);
+				authDispatch({ type: "auth", payload: user });
 			} else {
-				setUser(false);
+				authDispatch({ type: "logout" });
 			}
 		});
 		return () => unsubscribe();
-	}, [setUser]);
+	}, [authDispatch]);
 
 	useEffect(() => {
 		loadAuthenticatedApp();
@@ -30,7 +31,7 @@ const App: React.FC = () => {
 		<>
 			<GlobalStyle />
 			<React.Suspense fallback={<div>loading</div>}>
-				{user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+				{authState.user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
 			</React.Suspense>
 		</>
 	);

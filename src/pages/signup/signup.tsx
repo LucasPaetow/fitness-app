@@ -4,11 +4,11 @@ import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import Input from "../../components/input";
 import Button from "../../components/button";
-import { useAuth } from "../../contexts/auth-context";
+import { useAuthDispatch } from "../../contexts";
 import { signupUser } from "../../api/firebase";
 
 const Signup = () => {
-	const [user, setUser] = useAuth();
+	const authDispatch = useAuthDispatch();
 	const history = useHistory();
 	const [authData, setAuthData] = useState({
 		name: "",
@@ -29,14 +29,15 @@ const Signup = () => {
 	useEffect(() => {
 		if (!sendData) return;
 		const authenticate = async () => {
+			authDispatch({ type: "loading" });
 			const user = await signupUser(authData);
-			await setUser(user);
+			await authDispatch({ type: "auth", payload: user });
 			history.go("/create-new-workout", {
 				referrer: "/create-new-workout"
 			});
 		};
 		authenticate();
-	}, [authData, history, sendData, setUser]);
+	}, [authData, authDispatch, history, sendData]);
 
 	const handleForm = event => {
 		event.preventDefault();
@@ -88,7 +89,7 @@ const Signup = () => {
 	);
 };
 
-const Layout = styled.section`
+const Layout = styled.article`
 	height: calc(100vh - 4rem);
 	display: grid;
 	grid-template-columns: 2rem 1fr 2rem;

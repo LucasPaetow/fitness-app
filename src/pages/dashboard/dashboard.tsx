@@ -3,12 +3,12 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "../../components/button";
-import { useAuth } from "../../contexts/auth-context";
+import { useAuthDispatch } from "../../contexts";
 import { logoutUser } from "../../api/firebase";
 import { useHistory } from "react-router-dom";
 
 const Dashboard = (props: any) => {
-	const [user, setUser] = useAuth();
+	const dispatchAuth = useAuthDispatch();
 	const history = useHistory();
 	console.log(history);
 
@@ -17,7 +17,7 @@ const Dashboard = (props: any) => {
 	): Promise<void> => {
 		event.preventDefault();
 		await logoutUser();
-		await setUser(null);
+		await dispatchAuth({ type: "logout" });
 		return;
 	};
 
@@ -36,7 +36,7 @@ const Dashboard = (props: any) => {
 	);
 };
 
-const Layout = styled.section`
+const Layout = styled.article`
 	height: calc(100vh - 4rem);
 	display: grid;
 	grid-template-columns: 2rem 1fr 2rem;

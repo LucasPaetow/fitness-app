@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Redirect, useLocation, useHistory } from "react-router-dom";
-import { useNotifications } from "../contexts";
+import { useNotificationDispatch } from "../contexts";
 
 type RedirectProps = {
 	to: string;
@@ -10,23 +10,22 @@ type RedirectProps = {
 const RedirectComponent: React.FC<RedirectProps> = ({ to, record }) => {
 	const location = useLocation();
 	const history = useHistory();
-	const [setNotifications, toggleNotifications] = useNotifications();
+	const notificationDispatch = useNotificationDispatch();
 	let referrerExists = history.location.state?.hasOwnProperty("referrer");
+
+	console.log(to, record, history);
 
 	useEffect(() => {
 		//@ts-ignore
-		toggleNotifications({
+		notificationDispatch({
 			type: "toast",
-			content: () => {
-				return (
-					<p>
-						You are beeing redirected to {to} in order to
-						authenticate
-					</p>
-				);
-			}
+			payload: (
+				<p>
+					You are beeing redirected to {to} in order to authenticate
+				</p>
+			)
 		});
-	}, [record, to, toggleNotifications]);
+	}, [notificationDispatch, record, to]);
 
 	return record === "history" ? (
 		<>

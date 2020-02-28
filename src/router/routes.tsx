@@ -5,6 +5,7 @@ import Home from "../pages/homepage";
 import Signup from "../pages/signup";
 import Login from "../pages/login";
 import Dashboard from "../pages/dashboard";
+import NewWorkout from "../pages/new-workout";
 import RedirectComponent from "./redirect";
 
 export type RouteProps = {
@@ -30,7 +31,7 @@ const AUTHENTICATED_ROUTES: RouteProps[] = [
 		key: "new workout",
 		exact: true,
 		status: "default",
-		component: Dashboard
+		component: NewWorkout
 	},
 	{
 		key: "fallback",

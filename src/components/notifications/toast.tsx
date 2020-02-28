@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
-import { useNotifications } from "../../contexts";
+import { useNotificationDispatch } from "../../contexts";
 
 export interface ToastProps {
 	target: Element;
@@ -11,25 +11,24 @@ export interface ToastProps {
 }
 
 export const Toast: React.FC<PortalProps> = props => {
-	const [showNotification, toggleNotification] = useNotifications();
+	const notificationDispatch = useNotificationDispatch();
 	const [timer, setTimer] = useState(0);
 	const { children, timerDuration = 5 } = props;
 	const timerProgress = 1 - timer / timerDuration;
 
 	useEffect(() => {
 		if (timer === timerDuration + 1) {
-			toggleNotification({ type: "none", content: null });
+			notificationDispatch({ type: "close" });
 		}
 
 		const id = setInterval(() => {
 			setTimer(timer + 1);
 		}, 1000);
 		return () => clearInterval(id);
-	}, [timer, timerDuration, toggleNotification]);
+	}, [notificationDispatch, timer, timerDuration]);
 
-	const content = showNotification && (
-		<ToastBase
-			onClick={() => toggleNotification({ type: "none", content: null })}>
+	const content = (
+		<ToastBase onClick={() => notificationDispatch({ type: "none" })}>
 			<ToastDurationBar>
 				<ToastDuration timer={timerProgress} />
 			</ToastDurationBar>

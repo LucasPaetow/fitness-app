@@ -5,10 +5,10 @@ import { useHistory, Link } from "react-router-dom";
 import Input from "../../components/input";
 import Button from "../../components/button";
 import { loginUser } from "../../api/firebase";
-import { useAuth } from "../../contexts/auth-context";
+import { useAuthDispatch } from "../../contexts/auth-context";
 
 const Login = () => {
-	const [user, setUser] = useAuth();
+	const authDispatch = useAuthDispatch();
 	const history = useHistory();
 	const [authData, setAuthData] = useState({ email: "", password: "" });
 	const [sendData, toggleSentData] = useState(false);
@@ -24,12 +24,13 @@ const Login = () => {
 	useEffect(() => {
 		if (!sendData) return;
 		const authenticate = async () => {
+			authDispatch({ type: "loading" });
 			const user = await loginUser(authData);
 			await history.go("/");
-			await setUser(user);
+			await authDispatch({ type: "auth", payload: user });
 		};
 		authenticate();
-	}, [authData, history, sendData, setUser]);
+	}, [authData, authDispatch, history, sendData]);
 
 	const handleForm = event => {
 		event.preventDefault();
@@ -74,7 +75,7 @@ const Login = () => {
 	);
 };
 
-const Layout = styled.section`
+const Layout = styled.article`
 	height: calc(100vh - 4rem);
 	display: grid;
 	grid-template-columns: 2rem 1fr 2rem;

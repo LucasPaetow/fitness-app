@@ -2,7 +2,7 @@
 import React from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
-import { useNotifications } from "../../contexts";
+import { useNotificationDispatch } from "../../contexts";
 
 export interface ModalProps {
 	target: Element;
@@ -10,12 +10,11 @@ export interface ModalProps {
 }
 
 export const Modal: React.FC<PortalProps> = props => {
-	const [showNotification, toggleNotification] = useNotifications();
+	const notificationDispatch = useNotificationDispatch();
 	const { children } = props;
 
-	const content = showNotification && (
-		<Overlay
-			onClick={() => toggleNotification({ type: "none", content: null })}>
+	const content = (
+		<Overlay onClick={() => notificationDispatch({ type: "close" })}>
 			<ModalBase>
 				<ModalClose type="button" X></ModalClose>
 				<ModalBody>{children}</ModalBody>
