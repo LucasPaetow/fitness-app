@@ -1,14 +1,16 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+//@ts-ignore
+import { useRoutes } from "react-router-dom";
 import Navbar from "../components/navbar";
-import { AUTHENTICATED_ROUTES, RenderRoutes } from "../router";
+import { AUTHENTICATED_ROUTES } from "../router";
 
 const AuthenticatedApp: React.FC = () => {
+	const routes = useRoutes(AUTHENTICATED_ROUTES);
 	return (
-		<BrowserRouter>
+		<>
+			{routes}
 			<Navbar routes={AUTHENTICATED_ROUTES}></Navbar>
-			<RenderRoutes routes={AUTHENTICATED_ROUTES} />
-		</BrowserRouter>
+		</>
 	);
 };
 

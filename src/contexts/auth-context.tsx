@@ -6,33 +6,34 @@ const AuthDispatchContext = React.createContext<Dispatch | undefined>(
 );
 
 type Action =
-	| { type: "loading" }
-	| { type: "auth"; payload: object }
-	| { type: "logout" };
+	| { type: "pending" }
+	| { type: "user"; payload: object }
+	| { type: "nouser" };
 type Dispatch = (action: Action) => void;
 type State = {
-	status: boolean;
+	status: string;
 	user: object | null;
 };
 type AuthProviderProps = { children: React.ReactNode };
 
 const initalState = {
-	status: "idle",
-	user: null
+	status: "pending", //pending //user //nouser
+	user: null // null // fb auth object
 };
 
 const authReducer = (state: State, action: Action) => {
 	switch (action.type) {
-		case "loading": {
-			return { ...state, status: "loading" };
+		case "pending": {
+			return { ...state, status: "pending" };
 		}
-		case "auth": {
-			return { ...state, status: "auth", user: action.payload };
+		case "user": {
+			return { ...state, status: "user", user: action.payload };
 		}
-		case "logout": {
-			return { ...state, status: "idle", user: null };
+		case "nouser": {
+			return { ...state, status: "nouser", user: null };
 		}
 		default: {
+			console.log(action);
 			throw new Error(`Unhandled action type`);
 		}
 	}

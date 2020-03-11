@@ -2,7 +2,7 @@
 
 ## HTML
 
--   section 1: Headline, Input-component, Checkbox-component
+-   section 1: Radiobutton-component, suboptions
     -- add the options for supersets and time
 -   section 2: Headline, List of Exercise-Components
     -- Expand on click, edit from there on (even delete)

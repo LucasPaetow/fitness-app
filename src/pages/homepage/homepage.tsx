@@ -1,9 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+//@ts-ignore
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Button from "../../components/button";
 
 const Homepage = () => {
+	const location = useLocation();
+	const navigate = useNavigate();
+	console.log(location, navigate);
 	return (
 		<Layout>
 			<Header>

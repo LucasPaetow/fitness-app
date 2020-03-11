@@ -1,5 +1,5 @@
 //@ts-nocheck
-import React, { useEffect } from "react";
+import React from "react";
 import { useAuthDispatch, useAuthState } from "../contexts";
 import GlobalStyle from "../styles";
 import { auth } from "../api/firebase";
@@ -12,26 +12,34 @@ const App: React.FC = () => {
 	const authDispatch = useAuthDispatch();
 	const authState = useAuthState();
 
-	useEffect(() => {
+	React.useEffect(() => {
+		//change the user property
+		// can be pending // nouser // firebase-user-object
 		const unsubscribe = auth.onAuthStateChanged(user => {
 			if (user) {
-				authDispatch({ type: "auth", payload: user });
+				authDispatch({ type: "user", payload: user });
 			} else {
-				authDispatch({ type: "logout" });
+				authDispatch({ type: "nouser" });
 			}
 		});
 		return () => unsubscribe();
 	}, [authDispatch]);
 
-	useEffect(() => {
+	React.useEffect(() => {
 		loadAuthenticatedApp();
 	}, []);
+
+	const RenderStates = {
+		user: <AuthenticatedApp />,
+		nouser: <UnauthenticatedApp />,
+		pending: <h3>Loading ...</h3>
+	};
 
 	return (
 		<>
 			<GlobalStyle />
 			<React.Suspense fallback={<div>loading</div>}>
-				{authState.user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+				{RenderStates[authState.status]}
 			</React.Suspense>
 		</>
 	);

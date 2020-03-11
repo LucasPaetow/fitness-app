@@ -5,67 +5,105 @@ import styled from "styled-components";
 import Button from "../../components/button";
 import { useAuthDispatch } from "../../contexts";
 import { logoutUser } from "../../api/firebase";
-import { useHistory } from "react-router-dom";
+import { CardLayout, SectionLayout, PageLayout } from "../../components/layout";
 
 const Dashboard = (props: any) => {
 	const dispatchAuth = useAuthDispatch();
-	const history = useHistory();
-	console.log(history);
 
 	const handleClick = async (
 		event: React.MouseEvent<HTMLButtonElement>
 	): Promise<void> => {
 		event.preventDefault();
 		await logoutUser();
-		await dispatchAuth({ type: "logout" });
+		await dispatchAuth({ type: "nouser" });
 		return;
 	};
 
 	return (
-		<Layout>
-			<Header>
-				<Headline>hello, dashboard</Headline>
-				<Subline>
-					You made it to the dashboad! You are great. The only thing
-					you can do now is to logout and do it again.
-				</Subline>
-			</Header>
-
-			<StyledButton customOnClick={handleClick}>Logout</StyledButton>
-		</Layout>
+		<PageLayout
+			headline="Dashboard"
+			subheadline="Hello, Name. Nice to have you back again. You have 1 workout for today">
+			<SectionLayout headline="Your Progress">
+				<CardLayout
+					headline="This Month"
+					subheadline="Motivational quote or something similar here">
+					<>
+						<FakeContent></FakeContent>
+						<TextLink>show more progress details</TextLink>
+						<StyledButton customOnClick={handleClick}>
+							Logout
+						</StyledButton>
+					</>
+				</CardLayout>
+				<CardLayout
+					headline="This Month"
+					subheadline="Motivational quote or something similar here">
+					<>
+						<FakeContent></FakeContent>
+						<TextLink>show more progress details</TextLink>
+						<StyledButton customOnClick={handleClick}>
+							Logout
+						</StyledButton>
+					</>
+				</CardLayout>
+			</SectionLayout>
+			<SectionLayout headline="Your Progress">
+				<CardLayout
+					headline="This Month"
+					subheadline="Motivational quote or something similar here">
+					<>
+						<FakeContent></FakeContent>
+						<TextLink>show more progress details</TextLink>
+						<StyledButton customOnClick={handleClick}>
+							Logout
+						</StyledButton>
+					</>
+				</CardLayout>
+				<CardLayout
+					headline="This Month"
+					subheadline="Motivational quote or something similar here">
+					<>
+						<FakeContent></FakeContent>
+						<TextLink>show more progress details</TextLink>
+						<StyledButton customOnClick={handleClick}>
+							Logout
+						</StyledButton>
+					</>
+				</CardLayout>
+			</SectionLayout>
+		</PageLayout>
 	);
 };
 
-const Layout = styled.article`
-	height: calc(100vh - 4rem);
-	display: grid;
-	grid-template-columns: 2rem 1fr 2rem;
-	grid-template-rows: 5rem;
-	grid-auto-rows: min-content;
-	grid-row-gap: 2rem;
-
-	&:before {
-		content: "";
-		grid-column: 1/4;
-	}
-`;
-
-const Header = styled.header`
-	grid-column: 2/3;
-`;
-
-const Headline = styled.h1`
-	font-size: 3rem;
-	line-height: 100%;
-`;
-
-const Subline = styled.p`
-	padding-top: 1rem;
-`;
-
 const StyledButton = styled(Button)`
 	display: block;
-	grid-column: 2/3;
+	justify-self: end;
+	width: max-content;
+`;
+
+const FakeContent = styled.div`
+	width: 100%;
+	height: 8rem;
+	background-color: #575757;
+	border-radius: 1rem;
+`;
+const TextLink = styled.a`
+	text-decoration: underline;
+	color: white;
+	position: relative;
+	padding-left: 1.5rem;
+
+	&::before {
+		content: " ";
+		position: absolute;
+		height: 1rem;
+		width: 1rem;
+		border: 1px solid white;
+		border-radius: 50%;
+		left: 0;
+		top: 50%;
+		transform: translateY(-50%);
+	}
 `;
 
 export default Dashboard;

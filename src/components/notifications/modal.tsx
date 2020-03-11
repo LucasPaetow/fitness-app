@@ -1,70 +1,86 @@
-//@ts-nocheck
 import React from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 import { useNotificationDispatch } from "../../contexts";
 
 export interface ModalProps {
-	target: Element;
+	position: string;
 	children: React.ReactNode;
 }
 
-export const Modal: React.FC<PortalProps> = props => {
+interface ModalBodyProps {
+	positionX: "center" | "end" | "start";
+	positionY: "center" | "end" | "start";
+}
+
+export const Modal: React.FC<ModalProps> = props => {
 	const notificationDispatch = useNotificationDispatch();
-	const { children } = props;
+	const { children, position } = props;
+
+	const translatePositions = () => {
+		//right/left/center top/bottom/center
+		let positionArray = position.split(" ");
+		let xPostitionEnum = {
+			center: "center",
+			right: "end",
+			left: "start"
+		};
+		let yPostitionEnum = {
+			center: "center",
+			top: "start",
+			bottom: "end"
+		};
+		return {
+			x: xPostitionEnum[positionArray[0]],
+			y: yPostitionEnum[positionArray[1]]
+		};
+	};
+	const { x, y } = translatePositions();
 
 	const content = (
-		<Overlay onClick={() => notificationDispatch({ type: "close" })}>
-			<ModalBase>
-				<ModalClose type="button" X></ModalClose>
+		<ModalContainer>
+			<ModalBackground
+				onClick={() => notificationDispatch({ type: "close" })}
+			/>
+			<ModalBase positionX={x} positionY={y}>
 				<ModalBody>{children}</ModalBody>
 			</ModalBase>
-		</Overlay>
+		</ModalContainer>
 	);
 
 	return createPortal(<div>{content}</div>, document.body);
 };
 
-const Overlay = styled.div`
+const ModalContainer = styled.div`
 	z-index: 98;
 	position: absolute;
 	top: 0;
 	right: 0;
 	bottom: 0;
 	left: 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	display: grid;
 	height: 100vh;
 	width: 100vw;
-	background-color: rgba(0, 0, 0, 0.1);
 `;
 
-const ModalBase = styled.div`
+const ModalBackground = styled.aside`
+	grid-column: 1/2;
+	grid-row: 1/2;
+	height: 100vh;
+	width: 100vw;
+	background-color: rgba(0, 0, 0, 0.5);
 	z-index: 99;
-	/* Everything below is optional styling */
-	position: relative;
-	width: 100%;
-	max-width: 320px;
-	max-height: 100%;
-	margin: 0 auto;
 `;
 
-const ModalClose = styled.button`
-	position: absolute;
-	top: -24px;
-	right: 0;
-	padding: 5px;
-	border: 0;
-	-webkit-appearance: none;
-	background: none;
-	color: white;
-	cursor: pointer;
+const ModalBase = styled.div<ModalBodyProps>`
+	grid-column: 1/2;
+	grid-row: 1/2;
+	justify-self: ${props => props.positionX};
+	align-self: ${props => props.positionY};
+	z-index: 100;
 `;
 
 const ModalBody = styled.div`
-	position: absolute;
-	padding: 20px 24px;
-	border-radius: 4px;
-	background-color: white;
+	display: grid;
+	padding: 1rem;
 `;

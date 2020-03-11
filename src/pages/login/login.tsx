@@ -1,44 +1,56 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useHistory, Link } from "react-router-dom";
-import Input from "../../components/input";
+//@ts-ignore
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useTextInput } from "../../components/input";
 import Button from "../../components/button";
 import { loginUser } from "../../api/firebase";
 import { useAuthDispatch } from "../../contexts/auth-context";
 
 const Login = () => {
 	const authDispatch = useAuthDispatch();
-	const history = useHistory();
-	const [authData, setAuthData] = useState({ email: "", password: "" });
+	const navigate = useNavigate();
+	const location = useLocation();
+	const referrerExists = location.state?.hasOwnProperty("referrer");
+	const navigationTarget = `${
+		referrerExists ? location.state.referrer : "/"
+	}`;
+	const [emailInputState, EmailInput] = useTextInput("");
+	const [passwordInputState, PasswordInput] = useTextInput("");
 	const [sendData, toggleSentData] = useState(false);
-
-	const handleChange = target => event => {
-		const newAuthData = { ...authData, [target]: event.target.value };
-		setAuthData(newAuthData);
-	};
-
-	const handleNameChange = handleChange("email");
-	const handlePasswordChange = handleChange("password");
 
 	useEffect(() => {
 		if (!sendData) return;
 		const authenticate = async () => {
-			authDispatch({ type: "loading" });
-			const user = await loginUser(authData);
-			await history.go("/");
-			await authDispatch({ type: "auth", payload: user });
+			const user = await loginUser({
+				email: emailInputState,
+				password: passwordInputState
+			});
+			await navigate(navigationTarget);
+			await authDispatch({ type: "user", payload: user });
 		};
 		authenticate();
-	}, [authData, authDispatch, history, sendData]);
+	}, [
+		authDispatch,
+		emailInputState,
+		navigate,
+		navigationTarget,
+		passwordInputState,
+		referrerExists,
+		sendData
+	]);
 
 	const handleForm = event => {
 		event.preventDefault();
-		if (Object.values(authData).some(element => element === "")) {
+		if (
+			[emailInputState, passwordInputState].some(
+				element => element === ""
+			)
+		) {
 			throw new Error("at least one value is missing");
 		}
 		toggleSentData(true);
-
 		return;
 	};
 
@@ -55,16 +67,12 @@ const Login = () => {
 				</Subline>
 			</Header>
 			<Form onSubmit={handleForm}>
-				<Input
-					handleChange={handleNameChange}
-					value={authData.email}
-					type={"text"}
-					placeholder={"What are other people calling you"}
-					label={"Your name"}
+				<EmailInput
+					type={"email"}
+					placeholder={"Your awesome E-Mail address"}
+					label={"Your E-Mail"}
 				/>
-				<Input
-					handleChange={handlePasswordChange}
-					value={authData.password}
+				<PasswordInput
 					type={"password"}
 					placeholder={"Something memorable"}
 					label={"Your password"}

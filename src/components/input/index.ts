@@ -1,1 +1,2 @@
-export { default } from "./inputDefault";
+export * from "./text";
+export * from "./dropdown";

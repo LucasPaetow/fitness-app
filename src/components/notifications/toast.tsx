@@ -1,18 +1,20 @@
-//@ts-nocheck
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 import { useNotificationDispatch } from "../../contexts";
 
 export interface ToastProps {
-	target: Element;
+	position: string;
 	children: React.ReactNode;
-	timerDuration: Number;
+	timerDuration?: number;
+}
+interface TimerProps {
+	readonly timer: number;
 }
 
-export const Toast: React.FC<PortalProps> = props => {
+export const Toast: React.FC<ToastProps> = props => {
 	const notificationDispatch = useNotificationDispatch();
-	const [timer, setTimer] = useState(0);
+	const [timer, setTimer] = useState<number>(0);
 	const { children, timerDuration = 5 } = props;
 	const timerProgress = 1 - timer / timerDuration;
 
@@ -28,7 +30,7 @@ export const Toast: React.FC<PortalProps> = props => {
 	}, [notificationDispatch, timer, timerDuration]);
 
 	const content = (
-		<ToastBase onClick={() => notificationDispatch({ type: "none" })}>
+		<ToastBase onClick={() => notificationDispatch({ type: "close" })}>
 			<ToastDurationBar>
 				<ToastDuration timer={timerProgress} />
 			</ToastDurationBar>
@@ -52,7 +54,7 @@ const ToastDurationBar = styled.div`
 	position: relative;
 	width: 100%;
 `;
-const ToastDuration = styled.div`
+const ToastDuration = styled.div<TimerProps>`
 	width: 100%;
 	background-color: red;
 	height: 3px;

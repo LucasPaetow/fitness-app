@@ -1,5 +1,14 @@
 import React, { useEffect } from "react";
-import { Redirect, useLocation, useHistory } from "react-router-dom";
+
+import {
+	//@ts-ignore
+	Navigate,
+	useLocation,
+	//@ts-ignore
+	useNavigate,
+	//@ts-ignore
+	useResolvedLocation
+} from "react-router-dom";
 import { useNotificationDispatch } from "../contexts";
 
 type RedirectProps = {
@@ -9,40 +18,32 @@ type RedirectProps = {
 
 const RedirectComponent: React.FC<RedirectProps> = ({ to, record }) => {
 	const location = useLocation();
-	const history = useHistory();
 	const notificationDispatch = useNotificationDispatch();
-	let referrerExists = history.location.state?.hasOwnProperty("referrer");
-
-	console.log(to, record, history);
+	let referrerExists = location.state?.hasOwnProperty("referrer");
+	console.log("location", location);
 
 	useEffect(() => {
 		//@ts-ignore
 		notificationDispatch({
 			type: "toast",
-			payload: (
-				<p>
-					You are beeing redirected to {to} in order to authenticate
-				</p>
-			)
+			payload: {
+				content: (
+					<p>
+						You are beeing redirected to {to} in order to
+						authenticate
+					</p>
+				),
+				position: "center center"
+			}
 		});
 	}, [notificationDispatch, record, to]);
 
-	return record === "history" ? (
-		<>
-			<Redirect
-				exact
-				from={"/:anysite"}
-				to={{
-					pathname: `${to}`,
-					state: { referrer: location.pathname }
-				}}
-			/>
-		</>
+	return record === "navigate" ? (
+		<Navigate to={`${to}`} state={{ referrer: location.pathname }} />
 	) : (
-		<Redirect
-			exact
+		<Navigate
 			//@ts-ignore
-			to={`${referrerExists ? history.location.state.referrer : to}`}
+			to={`${referrerExists ? location.state.referrer : to}`}
 		/>
 	);
 };

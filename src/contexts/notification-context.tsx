@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React from "react";
 import { Modal, Toast } from "../components/notifications";
 
@@ -8,11 +7,20 @@ const NotificationStateContext = React.createContext<State | undefined>(
 const NotificationDispatchContext = React.createContext<Dispatch | undefined>(
 	undefined
 );
-
 type Action =
-	| { type: "modal"; payload: JSX.Element }
-	| { type: "toast"; payload: JSX.Element }
+	| { type: "modal"; payload: ActionPayload }
+	| { type: "toast"; payload: ActionPayload }
 	| { type: "close" };
+
+// type ActionType = "modal" | "toast" | "close";
+
+type ActionPayload = { content: JSX.Element; position: string };
+
+// interface Action {
+// 	type: ActionType;
+// 	payload?: ActionPayload;
+// }
+
 type Dispatch = (action: Action) => void;
 type State = {
 	content: JSX.Element;
@@ -26,10 +34,24 @@ const initalState = {
 const notificationReducer = (state: State, action: Action) => {
 	switch (action.type) {
 		case "modal": {
-			return { ...state, content: <Modal>{action.payload}</Modal> };
+			return {
+				...state,
+				content: (
+					<Modal position={action.payload.position}>
+						{action.payload.content}
+					</Modal>
+				)
+			};
 		}
 		case "toast": {
-			return { ...state, content: <Toast>{action.payload}</Toast> };
+			return {
+				...state,
+				content: (
+					<Toast position={action.payload.position}>
+						{action.payload.content}
+					</Toast>
+				)
+			};
 		}
 		case "close": {
 			return { ...state, content: null };
