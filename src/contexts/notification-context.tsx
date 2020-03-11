@@ -1,37 +1,103 @@
-//@ts-nocheck
 import React from "react";
-import Modal from "../components/modal";
+import { Modal, Toast } from "../components/notifications";
 
-const NotificationContext = React.createContext([{}, () => {}]);
+const NotificationStateContext = React.createContext<State | undefined>(
+	undefined
+);
+const NotificationDispatchContext = React.createContext<Dispatch | undefined>(
+	undefined
+);
+type Action =
+	| { type: "modal"; payload: ActionPayload }
+	| { type: "toast"; payload: ActionPayload }
+	| { type: "close" };
 
-type Props = {
-	children: React.ReactNode;
+// type ActionType = "modal" | "toast" | "close";
+
+type ActionPayload = { content: JSX.Element; position: string };
+
+// interface Action {
+// 	type: ActionType;
+// 	payload?: ActionPayload;
+// }
+
+type Dispatch = (action: Action) => void;
+type State = {
+	content: JSX.Element;
+};
+type NotificationProviderProps = { children: React.ReactNode };
+
+const initalState = {
+	content: null
 };
 
-const ProvideNotifications: React.FC<Props> = ({ children }) => {
-	const [showNotification, toggleNotification] = React.useState({
-		type: "none",
-		content: null
-	});
-	console.log(showNotification, toggleNotification);
+const notificationReducer = (state: State, action: Action) => {
+	switch (action.type) {
+		case "modal": {
+			return {
+				...state,
+				content: (
+					<Modal position={action.payload.position}>
+						{action.payload.content}
+					</Modal>
+				)
+			};
+		}
+		case "toast": {
+			return {
+				...state,
+				content: (
+					<Toast position={action.payload.position}>
+						{action.payload.content}
+					</Toast>
+				)
+			};
+		}
+		case "close": {
+			return { ...state, content: null };
+		}
+		default: {
+			throw new Error(`Unhandled action type`);
+		}
+	}
+};
+
+const ProvideNotification: React.FC<NotificationProviderProps> = ({
+	children
+}) => {
+	//@ts-ignore
+	const [notificationState, notificationDispatch] = React.useReducer(
+		notificationReducer,
+		initalState
+	);
 	return (
-		<NotificationContext.Provider
-			value={[showNotification, toggleNotification]}>
-			{children}
-			//@ts-ignore
-			{showNotification.type === "modal" && (
-				<Modal>{showNotification.content()}</Modal>
-			)}
-		</NotificationContext.Provider>
+		<NotificationStateContext.Provider value={notificationState}>
+			<NotificationDispatchContext.Provider value={notificationDispatch}>
+				{children}
+				{!!notificationState.content && notificationState.content}
+			</NotificationDispatchContext.Provider>
+		</NotificationStateContext.Provider>
 	);
 };
 
-const useNotifications = () => {
-	const [showNotification, toggleNotification] = React.useContext(
-		NotificationContext
-	);
-	return [showNotification, toggleNotification];
+const useNotificationState = () => {
+	const context = React.useContext(NotificationStateContext);
+	if (context === undefined) {
+		throw new Error(
+			"useNotificationState must be used within a NotificationProvider"
+		);
+	}
+	return context;
+};
+const useNotificationDispatch = () => {
+	const context = React.useContext(NotificationDispatchContext);
+	if (context === undefined) {
+		throw new Error(
+			"useNotificationDispatch must be used within a NotificationProvider"
+		);
+	}
+	return context;
 };
 
-export default ProvideNotifications;
-export { useNotifications };
+export default ProvideNotification;
+export { useNotificationState, useNotificationDispatch };

@@ -1,9 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+//@ts-ignore
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Button from "../../components/button";
 
 const Homepage = () => {
+	const location = useLocation();
+	const navigate = useNavigate();
+	console.log(location, navigate);
 	return (
 		<Layout>
 			<Header>
@@ -21,7 +25,7 @@ const Homepage = () => {
 	);
 };
 
-const Layout = styled.section`
+const Layout = styled.article`
 	height: calc(100vh - 4rem);
 	display: grid;
 	grid-template-columns: 2rem 1fr 2rem;

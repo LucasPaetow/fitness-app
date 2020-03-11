@@ -1,46 +1,52 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link, useHistory } from "react-router-dom";
-import Input from "../../components/input";
+//@ts-ignore
+import { Link, useNavigate } from "react-router-dom";
+import { useTextInput } from "../../components/input";
 import Button from "../../components/button";
-import { useAuth } from "../../contexts/auth-context";
+import { useAuthDispatch } from "../../contexts";
 import { signupUser } from "../../api/firebase";
 
 const Signup = () => {
-	const [user, setUser] = useAuth();
-	const history = useHistory();
-	const [authData, setAuthData] = useState({
-		name: "",
-		email: "",
-		password: ""
-	});
+	const [nameInputState, NameInput] = useTextInput("");
+	const [emailInputState, EmailInput] = useTextInput("");
+	const [passwordInputState, PasswordInput] = useTextInput("");
+	const authDispatch = useAuthDispatch();
+	const navigate = useNavigate();
 	const [sendData, toggleSentData] = useState(false);
-
-	const handleChange = target => event => {
-		const newAuthData = { ...authData, [target]: event.target.value };
-		setAuthData(newAuthData);
-	};
-
-	const handleNameChange = handleChange("name");
-	const handleEmailChange = handleChange("email");
-	const handlePasswordChange = handleChange("password");
 
 	useEffect(() => {
 		if (!sendData) return;
 		const authenticate = async () => {
-			const user = await signupUser(authData);
-			await setUser(user);
-			history.go("/create-new-workout", {
-				referrer: "/create-new-workout"
+			const user = await signupUser({
+				name: nameInputState,
+				email: emailInputState,
+				password: passwordInputState
 			});
+			await authDispatch({
+				type: "user",
+				payload: user
+			});
+			navigate("/");
 		};
 		authenticate();
-	}, [authData, history, sendData, setUser]);
+	}, [
+		authDispatch,
+		emailInputState,
+		nameInputState,
+		navigate,
+		passwordInputState,
+		sendData
+	]);
 
 	const handleForm = event => {
 		event.preventDefault();
-		if (Object.values(authData).some(element => element === "")) {
+		if (
+			[nameInputState, emailInputState, passwordInputState].some(
+				element => element === ""
+			)
+		) {
 			throw new Error("at least one value is missing");
 		}
 		toggleSentData(true);
@@ -60,24 +66,18 @@ const Signup = () => {
 				</Subline>
 			</Header>
 			<Form onSubmit={handleForm}>
-				<Input
-					handleChange={handleNameChange}
-					value={authData.name}
+				<NameInput
 					type={"text"}
 					placeholder={"What are other people calling you"}
 					label={"Your name"}
 					autofocus={true}
 				/>
-				<Input
-					handleChange={handleEmailChange}
-					value={authData.email}
+				<EmailInput
 					type={"email"}
 					placeholder={"Your awesome E-Mail address"}
 					label={"Your E-Mail"}
 				/>
-				<Input
-					handleChange={handlePasswordChange}
-					value={authData.password}
+				<PasswordInput
 					type={"password"}
 					placeholder={"Something memorable"}
 					label={"Your password"}
@@ -88,7 +88,7 @@ const Signup = () => {
 	);
 };
 
-const Layout = styled.section`
+const Layout = styled.article`
 	height: calc(100vh - 4rem);
 	display: grid;
 	grid-template-columns: 2rem 1fr 2rem;

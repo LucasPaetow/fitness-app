@@ -1,13 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./components/app/App";
+import App from "./app/App";
 import * as serviceWorker from "./serviceWorker";
 import AppContext from "./contexts";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
-	<AppContext>
-		<App />
-	</AppContext>,
+	<BrowserRouter>
+		<AppContext>
+			<App />
+		</AppContext>
+	</BrowserRouter>,
 	document.getElementById("root")
 );
 
