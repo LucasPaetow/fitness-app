@@ -11,10 +11,6 @@ export const PageLayout: React.FC<LayoutProps> = props => {
 	const { children, headline, subheadline } = props;
 	return (
 		<Layout>
-			<Brand>
-				<BrandIcon></BrandIcon>
-				<BrandHeadline>Brand</BrandHeadline>
-			</Brand>
 			<Header>
 				<Headline>{headline}</Headline>
 				<Subline>{subheadline}</Subline>
@@ -34,6 +30,13 @@ const Layout = styled.article`
 	grid-row-gap: 2rem;
 	background-color: #181818;
 	padding-bottom: 8rem;
+	padding-top: 2rem;
+
+	&:after {
+		content: " ";
+		grid-column: 2/3;
+		grid-row: 1/2;
+	}
 `;
 
 const Header = styled.header`
@@ -50,28 +53,6 @@ const Subline = styled.p`
 	padding-top: 1rem;
 	color: white;
 	font-weight: bold;
-`;
-
-const Brand = styled.aside`
-	grid-column: 2/3;
-	padding-top: 2rem;
-	display: grid;
-	grid-auto-flow: column;
-	grid-column-gap: 1rem;
-	grid-auto-columns: min-content;
-`;
-
-const BrandIcon = styled.div`
-	height: 2rem;
-	width: 2rem;
-	background-color: lightgrey;
-	content: " ";
-	border-radius: 50%;
-`;
-
-const BrandHeadline = styled.h4`
-	color: lightgrey;
-	font-size: 1.5rem;
 `;
 
 const ChildrenWrapper = styled.div`

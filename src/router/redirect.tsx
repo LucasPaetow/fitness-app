@@ -9,7 +9,7 @@ import {
 	//@ts-ignore
 	useResolvedLocation
 } from "react-router-dom";
-import { useNotificationDispatch } from "../contexts";
+import { useToastDispatch } from "../contexts";
 
 type RedirectProps = {
 	to: string;
@@ -18,7 +18,7 @@ type RedirectProps = {
 
 const RedirectComponent: React.FC<RedirectProps> = ({ to, record }) => {
 	const location = useLocation();
-	const notificationDispatch = useNotificationDispatch();
+	const toastDispatch = useToastDispatch();
 	let referrerExists = location.state?.hasOwnProperty("referrer");
 	console.log("location", location);
 
@@ -36,7 +36,7 @@ const RedirectComponent: React.FC<RedirectProps> = ({ to, record }) => {
 				position: "center center"
 			}
 		});
-	}, [notificationDispatch, record, to]);
+	}, [toastDispatch, record, to]);
 
 	return record === "navigate" ? (
 		<Navigate to={`${to}`} state={{ referrer: location.pathname }} />

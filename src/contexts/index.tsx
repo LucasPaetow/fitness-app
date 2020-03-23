@@ -1,6 +1,7 @@
 import React from "react";
-import ProvideAuth from "./auth-context";
-import ProvideNotifications from "./notification-context";
+import ProvideAuthContext from "./auth-context";
+import ProvideModalContext from "./notification-modal-context";
+import ProvideToastContext from "./notification-toast-context";
 
 interface Props {
 	children: React.ReactNode;
@@ -8,12 +9,15 @@ interface Props {
 
 const AppContext = ({ children }: Props) => {
 	return (
-		<ProvideNotifications>
-			<ProvideAuth>{children}</ProvideAuth>
-		</ProvideNotifications>
+		<ProvideToastContext>
+			<ProvideModalContext>
+				<ProvideAuthContext>{children}</ProvideAuthContext>
+			</ProvideModalContext>
+		</ProvideToastContext>
 	);
 };
 
 export default AppContext;
 export * from "./auth-context";
-export * from "./notification-context";
+export * from "./notification-modal-context";
+export * from "./notification-toast-context";

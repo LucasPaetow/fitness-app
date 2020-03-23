@@ -39,7 +39,7 @@ const authReducer = (state: State, action: Action) => {
 	}
 };
 
-const ProvideAuth: React.FC<AuthProviderProps> = ({ children }) => {
+const ProvideAuthContext: React.FC<AuthProviderProps> = ({ children }) => {
 	//@ts-ignore
 	const [authState, authDispatch] = React.useReducer(
 		authReducer,
@@ -69,5 +69,5 @@ const useAuthDispatch = () => {
 	return context;
 };
 
-export default ProvideAuth;
+export default ProvideAuthContext;
 export { useAuthState, useAuthDispatch };
