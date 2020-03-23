@@ -27,7 +27,7 @@ body,
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	/* Visual */
-	background-color: white;
+	background-color:  hsla(0, 0%, 30%, 1);
 	/* Misc */
 }
 

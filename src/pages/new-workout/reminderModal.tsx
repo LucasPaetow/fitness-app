@@ -12,9 +12,6 @@ export const useReminderModal = props => {
 		options: ["don't repeat", "day", "week", "month", "year", "custom"]
 	});
 	const { handleClick } = props;
-
-	console.log(props);
-
 	const ReminderModal = () => (
 		<CardLayout headline="Select a date">
 			<>

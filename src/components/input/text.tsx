@@ -1,29 +1,28 @@
+//@ts-nocheck
 import React from "react";
 import styled from "styled-components";
 
-export interface TextInputProps {
+interface TextInputProps {
 	type: string;
 	placeholder: string;
 	label: string;
 	autofocus: boolean;
 }
 
-export const useTextInput = (props: TextInputProps) => {
-	const { type, placeholder, label, autofocus = false } = props;
-	const [state, setState] = React.useState<string | undefined>();
-
-	const randomID = () =>
-		Math.random()
-			.toString(36)
-			.substr(2, 9);
-
-	const id = label + randomID();
-
-	const TextInput = () => (
-		<Label htmlFor={id}>
+const TextInput = props => {
+	const {
+		type,
+		label,
+		placeholder,
+		autofocus = false,
+		state,
+		setState
+	} = props;
+	return (
+		<Label htmlFor={"input" + label}>
 			{label}
-			<StyledInput
-				id={id}
+			<Input
+				id={"input" + label}
 				type={type}
 				value={state}
 				placeholder={placeholder}
@@ -32,48 +31,46 @@ export const useTextInput = (props: TextInputProps) => {
 			/>
 		</Label>
 	);
+};
 
-	return [state, TextInput, setState];
+export const useTextInput = (props: TextInputProps) => {
+	const [state, setState] = React.useState<string>("");
+
+	return [
+		state,
+		<TextInput state={state} setState={setState} {...props} />,
+		setState
+	];
 };
 
 const Label = styled.label`
 	font-weight: bold;
-	font-size: 1rem;
+	font-size: 0.8rem;
 	color: white;
+	padding-left: 0.5rem;
+
+	&:focus-within {
+		color: orange;
+	}
+	&:visited {
+		color: red;
+	}
 `;
 
-const StyledInput = styled.input`
-	margin-top: 0.25rem;
-	padding: 0.75rem 1rem;
-	border-radius: 0.25rem;
+const Input = styled.input`
+	padding: 0.5rem;
+	margin-left: -0.5rem;
+	border-radius: 0.5rem;
 	border: 1px solid grey;
 	width: 100%;
-	box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.05);
 	background-color: #7d7d7d;
 	font-size: 1rem;
 	font-weight: bold;
-	margin-bottom: 1rem;
-
-	&:before {
-		position: absolute;
-
-		content: " ";
-		border-radius: 0.5rem;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-
-		box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.3);
-		opacity: 0;
-		transition: opacity 500ms;
-	}
-
-	&:active::before {
-		opacity: 1;
-	}
 
 	&::placeholder {
 		color: #3b3a3a;
+	}
+	&:focus {
+		color: orange;
 	}
 `;

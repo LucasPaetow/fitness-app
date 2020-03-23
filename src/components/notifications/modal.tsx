@@ -1,7 +1,7 @@
 import React from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
-import { useNotificationDispatch } from "../../contexts";
+import { useModalDispatch } from "../../contexts";
 
 export interface ModalProps {
 	position: string;
@@ -14,7 +14,7 @@ interface ModalBodyProps {
 }
 
 export const Modal: React.FC<ModalProps> = props => {
-	const notificationDispatch = useNotificationDispatch();
+	const modalDispatch = useModalDispatch();
 	const { children, position } = props;
 
 	const translatePositions = () => {
@@ -39,9 +39,7 @@ export const Modal: React.FC<ModalProps> = props => {
 
 	const content = (
 		<ModalContainer>
-			<ModalBackground
-				onClick={() => notificationDispatch({ type: "close" })}
-			/>
+			<ModalBackground onClick={() => modalDispatch({ type: "close" })} />
 			<ModalBase positionX={x} positionY={y}>
 				<ModalBody>{children}</ModalBody>
 			</ModalBase>

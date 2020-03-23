@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
-import { useNotificationDispatch } from "../../contexts";
+import { useToastDispatch } from "../../contexts";
 
 export interface ToastProps {
 	position: string;
@@ -13,24 +13,24 @@ interface TimerProps {
 }
 
 export const Toast: React.FC<ToastProps> = props => {
-	const notificationDispatch = useNotificationDispatch();
+	const toastDispatch = useToastDispatch();
 	const [timer, setTimer] = useState<number>(0);
 	const { children, timerDuration = 5 } = props;
 	const timerProgress = 1 - timer / timerDuration;
 
 	useEffect(() => {
 		if (timer === timerDuration + 1) {
-			notificationDispatch({ type: "close" });
+			toastDispatch({ type: "close" });
 		}
 
 		const id = setInterval(() => {
 			setTimer(timer + 1);
 		}, 1000);
 		return () => clearInterval(id);
-	}, [notificationDispatch, timer, timerDuration]);
+	}, [toastDispatch, timer, timerDuration]);
 
 	const content = (
-		<ToastBase onClick={() => notificationDispatch({ type: "close" })}>
+		<ToastBase onClick={() => toastDispatch({ type: "close" })}>
 			<ToastDurationBar>
 				<ToastDuration timer={timerProgress} />
 			</ToastDurationBar>
