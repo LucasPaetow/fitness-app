@@ -6,10 +6,9 @@ export interface DropdownInputProps {
 	label: string;
 }
 
-export const useDropdown = (props: DropdownInputProps) => {
-	const { label, options } = props;
-	const [state, setState] = React.useState<string | undefined>();
-	const Dropdown = () => (
+const Dropdown = props => {
+	const { options, label, state, setState } = props;
+	return (
 		<Label htmlFor={label}>
 			{label}
 			<StyledSelected
@@ -26,7 +25,16 @@ export const useDropdown = (props: DropdownInputProps) => {
 			</StyledSelected>
 		</Label>
 	);
-	return [state, Dropdown];
+};
+
+export const useDropdown = (props: DropdownInputProps) => {
+	const [state, setState] = React.useState<string>("");
+
+	return [
+		<Dropdown state={state} setState={setState} {...props} />,
+		state,
+		setState
+	];
 };
 
 const Label = styled.label`

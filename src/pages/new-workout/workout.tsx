@@ -15,17 +15,17 @@ import { useReminderModal } from "./reminderModal";
 
 const NewWorkout = () => {
 	const modalDispatch = useModalDispatch();
-	const [inputState, TextInput] = useTextInput({
+	const [TextInput, textInputState] = useTextInput({
 		type: "text",
 		label: "Name of your Workout",
 		placeholder: "e.g. brake your Back"
 	});
 
-	const [repeatState, RepeatDropdown] = useDropdown({
+	const [RepeatDropdown, repeatDropdownState] = useDropdown({
 		label: "repeat every ...",
 		options: ["don't repeat", "day", "week", "month", "year", "custom"]
 	});
-	const [reminderState, ReminderDropdown] = useDropdown({
+	const [ReminderDropdown, reminderDropdownState] = useDropdown({
 		label: "remind me",
 		options: ["don't remind me", "1 hour before", "1 day before", "custom"]
 	});
@@ -33,12 +33,12 @@ const NewWorkout = () => {
 	const handleClick = () => {
 		console.log("modal button clicked");
 	};
-	const [reminderModalState, ReminderModal] = useReminderModal({
+	const [ReminderModal, reminderModalState] = useReminderModal({
 		handleClick
 	});
 
 	React.useEffect(() => {
-		if (repeatState === "custom") {
+		if (repeatDropdownState === "custom") {
 			modalDispatch({
 				type: "modal",
 				payload: {
@@ -47,10 +47,10 @@ const NewWorkout = () => {
 				}
 			});
 		}
-	}, [modalDispatch, repeatState]);
+	}, [modalDispatch, repeatDropdownState]);
 
 	React.useEffect(() => {
-		if (reminderState === "custom") {
+		if (reminderDropdownState === "custom") {
 			modalDispatch({
 				type: "modal",
 				payload: {
@@ -59,7 +59,7 @@ const NewWorkout = () => {
 				}
 			});
 		}
-	}, [modalDispatch, reminderState]);
+	}, [modalDispatch, reminderDropdownState]);
 
 	return (
 		<PageLayout
@@ -72,8 +72,8 @@ const NewWorkout = () => {
 					<>
 						<FormLayout>
 							{TextInput}
-							<RepeatDropdown />
-							<ReminderDropdown />
+							{RepeatDropdown}
+							{ReminderDropdown}
 						</FormLayout>
 					</>
 				</CardLayout>
