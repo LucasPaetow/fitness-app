@@ -6,35 +6,36 @@ export interface RadioInputProps {
 	name: string;
 }
 
-export const useRadioInput = (props: RadioInputProps) => {
-	const { content, name } = props;
-	const [state, setState] = React.useState<string | undefined>();
-
-	const randomID = () =>
-		Math.random()
-			.toString(36)
-			.substr(2, 9);
-
-	const key = name + randomID();
-
-	const RadioInput = () => (
+const RadioInput = props => {
+	const { content, name, state, setState } = props;
+	return (
 		<RadioGroup>
 			{content.map(radioButton => (
-				<Radio key={key + randomID()}>
+				<Radio key={name + "radio"}>
 					<Input
 						type="radio"
-						id={radioButton + key}
+						id={radioButton + "radioInput"}
 						value={state}
 						checked={state === radioButton}
 						onChange={e => setState(e.target.value)}
 					/>
-					<Label htmlFor={radioButton + key}>{radioButton}</Label>
+					<Label htmlFor={radioButton + "radioInput"}>
+						{radioButton}
+					</Label>
 				</Radio>
 			))}
 		</RadioGroup>
 	);
+};
 
-	return [state, RadioInput, setState];
+export const useRadioInput = (props: RadioInputProps) => {
+	const [state, setState] = React.useState<string>("");
+
+	return [
+		<RadioInput state={state} setState={setState} {...props} />,
+		state,
+		setState
+	];
 };
 
 const RadioGroup = styled.div`

@@ -7,7 +7,7 @@ import Button from "../../components/button";
 
 export const useReminderModal = props => {
 	const [state, setState] = React.useState("");
-	const [repeatState, RepeatDropdown] = useDropdown({
+	const [RepeatDropdown, repeatDropdownState] = useDropdown({
 		label: "repeat every ...",
 		options: ["don't repeat", "day", "week", "month", "year", "custom"]
 	});

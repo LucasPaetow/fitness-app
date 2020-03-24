@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React from "react";
 import styled from "styled-components";
 
@@ -37,8 +36,8 @@ export const useTextInput = (props: TextInputProps) => {
 	const [state, setState] = React.useState<string>("");
 
 	return [
-		state,
 		<TextInput state={state} setState={setState} {...props} />,
+		state,
 		setState
 	];
 };
