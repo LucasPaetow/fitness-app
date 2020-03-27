@@ -1,5 +1,5 @@
 import React from "react";
-import { Toast } from "../components/notifications";
+import { Toast } from "components/notifications";
 
 type ToastAction =
 	| { type: "modal"; payload: ToastActionPayload }

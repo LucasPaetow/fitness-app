@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 //@ts-ignore
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import Button from "../../components/button";
+import Button from "components/button";
 
 const Homepage = () => {
 	const location = useLocation();

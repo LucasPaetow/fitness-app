@@ -1,4 +1,4 @@
-import { auth } from "./firebaseInit";
+import { auth } from "api/firebase/firebaseInit";
 
 interface AuthData {
 	email: string;

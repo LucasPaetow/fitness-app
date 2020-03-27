@@ -1,9 +1,9 @@
 //@ts-nocheck
 import React from "react";
 import styled from "styled-components";
-import { useDropdown } from "../../components/input";
-import { CardLayout } from "../../components/layout";
-import Button from "../../components/button";
+import { useDropdown } from "components/input";
+import { CardLayout } from "components/layout";
+import Button from "components/button";
 
 export const useReminderModal = props => {
 	const [state, setState] = React.useState("");

@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 //@ts-ignore
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import { useTextInput } from "../../components/input";
-import Button from "../../components/button";
-import { loginUser } from "../../api/firebase";
-import { useAuthDispatch } from "../../contexts/auth-context";
+import { useTextInput } from "components/input";
+import Button from "components/button";
+import { loginUser } from "api/firebase";
+import { useAuthDispatch } from "contexts";
 
 const Login = () => {
 	const authDispatch = useAuthDispatch();

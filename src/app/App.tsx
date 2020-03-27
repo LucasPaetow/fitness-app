@@ -1,12 +1,12 @@
 //@ts-nocheck
 import React from "react";
-import { useAuthDispatch, useAuthState } from "../contexts";
-import GlobalStyle from "../styles";
-import { auth } from "../api/firebase";
+import { useAuthDispatch, useAuthState } from "contexts";
+import GlobalStyle from "styles";
+import { auth } from "api/firebase";
 
-const loadAuthenticatedApp = () => import("./authenticated-app");
+const loadAuthenticatedApp = () => import("app/authenticated-app");
 const AuthenticatedApp = React.lazy(loadAuthenticatedApp);
-const UnauthenticatedApp = React.lazy(() => import("./unauthenticated-app"));
+const UnauthenticatedApp = React.lazy(() => import("app/unauthenticated-app"));
 
 const App: React.FC = () => {
 	const authDispatch = useAuthDispatch();

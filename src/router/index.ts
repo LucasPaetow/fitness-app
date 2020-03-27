@@ -1,2 +1,1 @@
-export * from "./routes";
-//export * from "./RenderRoutes";
+export { default } from "./redirect";

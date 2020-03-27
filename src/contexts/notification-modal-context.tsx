@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal } from "../components/notifications";
+import { Modal } from "components/notifications";
 
 //types
 type ModalAction =

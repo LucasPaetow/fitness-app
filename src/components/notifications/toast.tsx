@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
-import { useToastDispatch } from "../../contexts";
+import { useToastDispatch } from "contexts";
 
 export interface ToastProps {
 	position: string;

@@ -21,3 +21,4 @@ export default AppContext;
 export * from "./auth-context";
 export * from "./notification-modal-context";
 export * from "./notification-toast-context";
+export * from "./component-new-workout-context";

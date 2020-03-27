@@ -1,13 +1,15 @@
 # Todo
 
-## Notification-Context
+## CSS
+
+-   remove styled components and add css.modules
+
+## Context
+
+### Context-Arrangement
+
+-   Where should the context be placed? In a context folder or in the respective app folder?
+
+### Notification-Context
 
 -   render them as array
-
-## Routing
-
--   remove static routes in favor of dynamic ones
-
-## Inputs
-
--   unify API => {[value, setValue], componentValue} or [value, setValue, componentValue]

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import Hamburger from "components/navbar/hamburger";
 
-export const NavbarAuthenticated = () => {
+export const NavbarUnauthenticated = () => {
 	const [activeNav, setActiveNav] = React.useState(false);
 	const location = useLocation();
 	const handleClick = () => setActiveNav(!activeNav);
@@ -14,7 +14,7 @@ export const NavbarAuthenticated = () => {
 		let current = location.pathname;
 
 		if (current === "/") {
-			return "Dashboard";
+			return "Home";
 		}
 
 		return current
@@ -40,17 +40,15 @@ export const NavbarAuthenticated = () => {
 					<NavbarLinks>
 						<NavbarLink to="/" activeClassName="selected">
 							<NavIcon></NavIcon>
-							Dashboard
+							Home
 						</NavbarLink>
-						<NavbarLink
-							to="/create-your-workout"
-							activeClassName="selected">
+						<NavbarLink to="/login" activeClassName="selected">
 							<NavIcon></NavIcon>
-							Create Workout
+							Login
 						</NavbarLink>
-						<NavbarLink to="/profile" activeClassName="selected">
+						<NavbarLink to="/signup" activeClassName="selected">
 							<NavIcon></NavIcon>
-							Profile
+							Signup
 						</NavbarLink>
 					</NavbarLinks>
 				</ExtendedNavbar>
