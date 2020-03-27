@@ -1,19 +1,29 @@
 import React from "react";
 //@ts-ignore
-import { useRoutes } from "react-router-dom";
-import Navbar from "../components/navbar";
-import { UNAUTHENTICATED_ROUTES } from "../router";
+import { Routes, Route } from "react-router-dom";
+import { NavbarUnauthenticated } from "components/navbar";
+import Home from "pages/homepage";
+import Signup from "pages/signup";
+import Login from "pages/login";
+import RedirectComponent from "router";
 
 const UnauthenticatedApp: React.FC = () => {
-	const routes = useRoutes(UNAUTHENTICATED_ROUTES);
 	return (
 		<>
-			<Navbar routes={UNAUTHENTICATED_ROUTES}></Navbar>
-			{routes}
+			<NavbarUnauthenticated />
+			<Routes>
+				<Route path="/" element={<Home />}></Route>
+				<Route path="signup" element={<Signup />} />
+				<Route path="login" element={<Login />} />
+				<Route
+					path="*"
+					element={
+						<RedirectComponent to={"/login"} record={"navigate"} />
+					}
+				/>
+			</Routes>
 		</>
 	);
 };
 
 export default UnauthenticatedApp;
-
-//<Navbar routes={UNAUTHENTICATED_ROUTES}></Navbar>

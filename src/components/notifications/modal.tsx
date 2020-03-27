@@ -1,7 +1,7 @@
 import React from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
-import { useModalDispatch } from "../../contexts";
+import { useModalDispatch } from "contexts";
 
 export interface ModalProps {
 	position: string;

@@ -1,2 +1,2 @@
-export { default } from "./navbar";
 export * from "./NavbarAuthenticated";
+export * from "./NavbarUnauthenticated";

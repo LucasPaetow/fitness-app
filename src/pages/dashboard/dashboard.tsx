@@ -2,10 +2,10 @@
 
 import React from "react";
 import styled from "styled-components";
-import Button from "../../components/button";
-import { useAuthDispatch } from "../../contexts";
-import { logoutUser } from "../../api/firebase";
-import { CardLayout, SectionLayout, PageLayout } from "../../components/layout";
+import Button from "components/button";
+import { useAuthDispatch } from "contexts";
+import { logoutUser } from "api/firebase";
+import { CardLayout, SectionLayout, PageLayout } from "components/layout";
 
 const Dashboard = (props: any) => {
 	const dispatchAuth = useAuthDispatch();

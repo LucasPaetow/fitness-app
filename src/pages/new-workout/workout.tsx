@@ -1,19 +1,22 @@
 //@ts-nocheck
 import React from "react";
 import styled from "styled-components";
-import Button from "../../components/button";
-import { useTextInput, useDropdown } from "../../components/input";
-import { useModalDispatch } from "../../contexts";
+import Button from "components/button";
+import { useTextInput, useDropdown } from "components/input";
+import { useModalDispatch } from "contexts";
 import {
 	CardLayout,
 	SectionLayout,
 	PageLayout,
 	FormLayout,
 	SingularFormRow
-} from "../../components/layout";
-import { useReminderModal } from "./reminderModal";
+} from "components/layout";
+import { useReminderModal } from "pages/new-workout/reminderModal";
+import { useNewWorkoutState, useNewWorkoutDispatch } from "contexts";
 
 const NewWorkout = () => {
+	const newWorkoutState = useNewWorkoutState();
+	const newWorkoutDispatch = useNewWorkoutDispatch();
 	const modalDispatch = useModalDispatch();
 	const [TextInput, textInputState] = useTextInput({
 		type: "text",
@@ -60,6 +63,20 @@ const NewWorkout = () => {
 			});
 		}
 	}, [modalDispatch, reminderDropdownState]);
+
+	React.useEffect(() => {
+		console.log(newWorkoutState);
+
+		// newWorkoutDispatch({
+		// 	type: "name",
+		// 	payload: {
+		// 		name: "hello"
+		// 	}
+		// });
+		console.log(newWorkoutDispatch);
+
+		console.log(newWorkoutState);
+	}, [newWorkoutDispatch, newWorkoutState]);
 
 	return (
 		<PageLayout
