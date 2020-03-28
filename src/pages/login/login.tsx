@@ -1,12 +1,12 @@
 // @ts-nocheck
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 //@ts-ignore
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useTextInput } from "components/input";
 import Button from "components/button";
 import { loginUser } from "api/firebase";
 import { useAuthDispatch } from "contexts";
+import styles from "./Login.module.css";
 
 const Login = () => {
 	const authDispatch = useAuthDispatch();
@@ -55,18 +55,18 @@ const Login = () => {
 	};
 
 	return (
-		<Layout>
-			<Header>
-				<Headline>
+		<article className={styles.loginLayout}>
+			<header className={styles.loginHeader}>
+				<h1 className={styles.loginHeadline}>
 					hello, <br></br>login form
-				</Headline>
-				<Subline>
+				</h1>
+				<p className={styles.loginSubline}>
 					Please enter your name and password to login. If you dont
 					have an account, you can{" "}
 					<Link to="/auth/signup">make one here</Link>.{" "}
-				</Subline>
-			</Header>
-			<Form onSubmit={handleForm}>
+				</p>
+			</header>
+			<form className={styles.loginForm} onSubmit={handleForm}>
 				<EmailInput
 					type={"email"}
 					placeholder={"Your awesome E-Mail address"}
@@ -78,44 +78,9 @@ const Login = () => {
 					label={"Your password"}
 				/>
 				<Button>Login</Button>
-			</Form>
-		</Layout>
+			</form>
+		</article>
 	);
 };
-
-const Layout = styled.article`
-	height: calc(100vh - 4rem);
-	display: grid;
-	grid-template-columns: 2rem 1fr 2rem;
-	grid-template-rows: 5rem;
-	grid-auto-rows: min-content;
-	grid-row-gap: 2rem;
-
-	&:before {
-		content: "";
-		grid-column: 1/4;
-	}
-`;
-
-const Header = styled.header`
-	grid-column: 2/3;
-`;
-
-const Headline = styled.h1`
-	font-size: 3rem;
-	line-height: 100%;
-`;
-
-const Subline = styled.p`
-	padding-top: 1rem;
-`;
-
-const Form = styled.form`
-	grid-column: 2/3;
-	width: 100%;
-	display: grid;
-	grid-row-gap: 1.5rem;
-	grid-auto-flow: row;
-`;
 
 export default Login;

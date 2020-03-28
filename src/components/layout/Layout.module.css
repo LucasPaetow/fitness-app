@@ -1,0 +1,139 @@
+.layoutSectionSection {
+	height: 100%;
+	width: 100%;
+	display: grid;
+	grid-auto-rows: min-content;
+	grid-row-gap: 1rem;
+	position: relative;
+	padding-bottom: 4rem;
+}
+
+.layoutSectionHeader {
+	display: grid;
+	grid-template-columns: 2rem 1fr 2rem;
+	width: 100%;
+	background-color: #181818;
+	z-index: 10;
+}
+
+.layoutSectionHeadline {
+	font-size: 1.5rem;
+	line-height: 100%;
+	color: white;
+	padding: 2rem 0 1rem 0;
+	grid-column: 2/3;
+}
+
+.layoutSectionWrapper {
+	display: grid;
+	grid-row-gap: 0.5rem;
+}
+
+.layoutCardSection {
+	height: 100%;
+	width: 100%;
+	display: grid;
+	grid-template-columns: 2rem 1fr 2rem;
+	grid-row-gap: 1rem;
+	background-color: #3b3a3a;
+	padding: 2rem 0;
+}
+
+.layoutCardHeader {
+	grid-column: 2/3;
+}
+
+.layoutCardHeadline {
+	font-size: 1rem;
+	line-height: 100%;
+	color: white;
+}
+
+.layoutCardSubline {
+	padding-top: 0.5rem;
+	color: white;
+	font-weight: bold;
+}
+
+.layoutCardWrapper {
+	grid-column: 2/3;
+	display: grid;
+	grid-row-gap: 1rem;
+}
+
+.layoutFormForm {
+	background-color: grey;
+	width: 100%;
+	border-radius: 0.5rem;
+	border: 1px solid darkgrey;
+}
+
+.layoutFormSingleRow {
+	padding: 0.5rem;
+	display: grid;
+	border-bottom: 1px solid darkgrey;
+}
+
+.layoutFormSingleRow:last-of-type {
+	border-bottom: 1px solid transparent;
+}
+
+.layoutFormDualRows {
+	display: grid;
+	grid-auto-flow: column;
+	grid-column-gap: 0.5rem;
+	justify-content: start;
+	border-bottom: 1px solid darkgrey;
+}
+
+.layoutFormDualRows:last-of-type {
+	border-bottom: 1px solid transparent;
+}
+
+.layoutFormDualRow {
+	padding: 0.5rem;
+	display: grid;
+	border-bottom: 1px solid darkgrey;
+}
+
+.layoutFormDualRow:last-of-type {
+	border-bottom: 1px solid transparent;
+}
+
+.layoutPageLayout {
+	min-height: 100vh;
+	display: grid;
+	grid-template-columns: 2rem 1fr 2rem;
+	grid-template-rows: 4rem;
+	grid-auto-rows: min-content;
+	grid-row-gap: 2rem;
+	background-color: #181818;
+	padding-bottom: 8rem;
+	padding-top: 2rem;
+}
+
+.layoutPageLayout:after {
+	content: " ";
+	grid-column: 2/3;
+	grid-row: 1/2;
+}
+
+.layoutPageHeader {
+	grid-column: 2/3;
+}
+
+.layoutPageHeadline {
+	font-size: 2rem;
+	line-height: 100%;
+	color: white;
+}
+
+.layoutPageSubline {
+	padding-top: 1rem;
+	color: white;
+	font-weight: bold;
+}
+
+.layoutPageWrapper {
+	grid-column: 1/4;
+}

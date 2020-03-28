@@ -1,1 +1,1 @@
-export { default } from "./workout";
+export { default } from "./NewWorkout";

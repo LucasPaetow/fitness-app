@@ -1,0 +1,30 @@
+.homepageLayout {
+	height: calc(100vh - 4rem);
+	display: grid;
+	grid-template-columns: 2rem 1fr 2rem;
+	grid-template-rows: 5rem;
+	grid-auto-rows: min-content;
+	grid-row-gap: 2rem;
+}
+
+.homepageLayout:before {
+	content: "";
+	grid-column: 1/4;
+}
+
+.homepageHeader {
+	grid-column: 2/3;
+}
+
+.homepageHeadline {
+	font-size: 3rem;
+	line-height: 100%;
+}
+
+.homepageSubline {
+	padding-top: 1rem;
+}
+
+.homepageButtonWrapper {
+	grid-column: 2/3;
+}

@@ -1,2 +1,3 @@
-export * from "./text";
-export * from "./dropdown";
+export * from "./InputText";
+export * from "./InputDropdown";
+export * from "./InputRadio";

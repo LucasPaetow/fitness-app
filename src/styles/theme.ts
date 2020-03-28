@@ -1,4 +1,4 @@
-export const themeStyles = {
+const themeStyles = {
 	colors: {
 		powderWhite: "#FFFDF9",
 		persianGreen: "#06B49A",
@@ -12,3 +12,5 @@ export const themeStyles = {
 		large: "3em"
 	}
 };
+
+export default themeStyles;

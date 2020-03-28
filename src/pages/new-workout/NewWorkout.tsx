@@ -1,6 +1,5 @@
 //@ts-nocheck
 import React from "react";
-import styled from "styled-components";
 import Button from "components/button";
 import { useTextInput, useDropdown } from "components/input";
 import { useModalDispatch } from "contexts";
@@ -11,8 +10,9 @@ import {
 	FormLayout,
 	SingularFormRow
 } from "components/layout";
-import { useReminderModal } from "pages/new-workout/reminderModal";
+import { useReminderModal } from "pages/new-workout/NewWorkoutReminder";
 import { useNewWorkoutState, useNewWorkoutDispatch } from "contexts";
+import styles from "./NewWorkout.module.css";
 
 const NewWorkout = () => {
 	const newWorkoutState = useNewWorkoutState();
