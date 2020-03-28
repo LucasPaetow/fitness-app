@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import styled from "styled-components";
 import { useToastDispatch } from "contexts";
+import styles from "./Notifications.module.css";
 
 export interface ToastProps {
 	position: string;
@@ -30,43 +30,18 @@ export const Toast: React.FC<ToastProps> = props => {
 	}, [toastDispatch, timer, timerDuration]);
 
 	const content = (
-		<ToastBase onClick={() => toastDispatch({ type: "close" })}>
-			<ToastDurationBar>
-				<ToastDuration timer={timerProgress} />
-			</ToastDurationBar>
-			<ToastBody>{children}</ToastBody>
-		</ToastBase>
+		<div
+			className={styles.toastBase}
+			onClick={() => toastDispatch({ type: "close" })}>
+			<div className={styles.toastDurationBar}>
+				<div
+					className={styles.toastDurationBar}
+					style={{ transform: `scaleX(${timerProgress})` }}
+				/>
+			</div>
+			<div className={styles.toastBody}>{children}</div>
+		</div>
 	);
 
 	return createPortal(<div>{content}</div>, document.body);
 };
-
-const ToastBase = styled.div`
-	z-index: 99;
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	display: grid;
-`;
-
-const ToastDurationBar = styled.div`
-	position: relative;
-	width: 100%;
-`;
-const ToastDuration = styled.div<TimerProps>`
-	width: 100%;
-	background-color: red;
-	height: 3px;
-	transform: scaleX(${props => props.timer});
-	transform-origin: left;
-	transition: transform 1s linear;
-`;
-
-const ToastBody = styled.div`
-	padding: 20px 24px;
-	border-radius: 4px;
-	background-color: white;
-	justify-self: center;
-	align-self: center;
-`;

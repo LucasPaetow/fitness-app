@@ -1,9 +1,9 @@
 //@ts-nocheck
 import React from "react";
-import styled from "styled-components";
 import { useDropdown } from "components/input";
 import { CardLayout } from "components/layout";
 import Button from "components/button";
+import styles from "./NewWorkout.module.css";
 
 export const useReminderModal = props => {
 	const [state, setState] = React.useState("");
@@ -22,12 +22,3 @@ export const useReminderModal = props => {
 
 	return [state, ReminderModal];
 };
-
-const Layout = styled.article`
-	height: calc(100vh - 4rem);
-	display: grid;
-	grid-template-columns: 2rem 1fr 2rem;
-	grid-template-rows: 5rem;
-	grid-auto-rows: min-content;
-	grid-row-gap: 2rem;
-`;

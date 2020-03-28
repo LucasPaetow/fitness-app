@@ -1,4 +1,4 @@
 export { default, auth } from "./firebaseInit";
-export * from "./signup";
-export * from "./login";
-export * from "./logout";
+export * from "./firebaseSignup";
+export * from "./firebaseLogin";
+export * from "./firebaseLogout";

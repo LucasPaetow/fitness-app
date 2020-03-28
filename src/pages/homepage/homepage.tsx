@@ -1,59 +1,28 @@
 import React from "react";
-import styled from "styled-components";
 //@ts-ignore
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Button from "components/button";
+import styles from "./Homepage.module.css";
 
 const Homepage = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	console.log(location, navigate);
 	return (
-		<Layout>
-			<Header>
-				<Headline>hello, homepage</Headline>
-				<Subline>
+		<article className={styles.homepageLayout}>
+			<header className={styles.homepageHeader}>
+				<h1 className={styles.homepageHeaderline}>hello, homepage</h1>
+				<p className={styles.homepageSubline}>
 					Welcome, please continue here to the dashboard and have fun
 					along the way.
-				</Subline>
-			</Header>
+				</p>
+			</header>
 
-			<ButtonWrapper to="/dashboard">
+			<Link className={styles.homepageButtonWrapper} to="/dashboard">
 				<Button>Go to dashboard</Button>
-			</ButtonWrapper>
-		</Layout>
+			</Link>
+		</article>
 	);
 };
-
-const Layout = styled.article`
-	height: calc(100vh - 4rem);
-	display: grid;
-	grid-template-columns: 2rem 1fr 2rem;
-	grid-template-rows: 5rem;
-	grid-auto-rows: min-content;
-	grid-row-gap: 2rem;
-
-	&:before {
-		content: "";
-		grid-column: 1/4;
-	}
-`;
-
-const Header = styled.header`
-	grid-column: 2/3;
-`;
-
-const Headline = styled.h1`
-	font-size: 3rem;
-	line-height: 100%;
-`;
-
-const Subline = styled.p`
-	padding-top: 1rem;
-`;
-
-const ButtonWrapper = styled(Link)`
-	grid-column: 2/3;
-`;
 
 export default Homepage;

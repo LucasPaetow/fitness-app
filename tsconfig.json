@@ -4,7 +4,7 @@
 		"allowSyntheticDefaultImports": true,
 		"baseUrl": "src",
 		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
+		"forceConsistentCasingInFileNames": false,
 		"isolatedModules": true,
 		"jsx": "react",
 		"lib": ["dom", "dom.iterable", "esnext"],

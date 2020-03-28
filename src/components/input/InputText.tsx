@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styles from "./Input.module.css";
 
 interface TextInputProps {
 	type: string;
@@ -18,9 +18,10 @@ const TextInput = props => {
 		setState
 	} = props;
 	return (
-		<Label htmlFor={"input" + label}>
+		<label htmlFor={"input" + label} className={styles.inputTextLabel}>
 			{label}
-			<Input
+			<input
+				className={styles.inputTextInput}
 				id={"input" + label}
 				type={type}
 				value={state}
@@ -28,7 +29,7 @@ const TextInput = props => {
 				onChange={e => setState(e.target.value)}
 				autoFocus={autofocus}
 			/>
-		</Label>
+		</label>
 	);
 };
 
@@ -41,35 +42,3 @@ export const useTextInput = (props: TextInputProps) => {
 		setState
 	];
 };
-
-const Label = styled.label`
-	font-weight: bold;
-	font-size: 0.8rem;
-	color: white;
-	padding-left: 0.5rem;
-
-	&:focus-within {
-		color: orange;
-	}
-	&:visited {
-		color: red;
-	}
-`;
-
-const Input = styled.input`
-	padding: 0.5rem;
-	margin-left: -0.5rem;
-	border-radius: 0.5rem;
-	border: 1px solid grey;
-	width: 100%;
-	background-color: #7d7d7d;
-	font-size: 1rem;
-	font-weight: bold;
-
-	&::placeholder {
-		color: #3b3a3a;
-	}
-	&:focus {
-		color: orange;
-	}
-`;
