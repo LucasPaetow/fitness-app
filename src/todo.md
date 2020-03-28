@@ -1,9 +1,5 @@
 # Todo
 
-## CSS
-
--   remove styled components and add css.modules
-
 ## Context
 
 ### Context-Arrangement
